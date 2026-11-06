@@ -70,6 +70,21 @@ def atualizar_agendamento(id):
     return jsonify({"mensagem": "Agendamento atualizado com sucesso!"})
 
 
+# --- DELETA AGENDAMENTO ---
+@app.route('/agendamentos/<int:id>', methods=['DELETE'])
+def deletar_agendamento(id):
+    conexao = get_db_connection()
+    cursor = conexao.cursor()
+
+    cursor.execute('''
+        DELETE FROM agendamentos
+        WHERE ID = ?
+    ''', (id,))
+    
+    conexao.commit()
+    conexao.close()
+    
+    return jsonify({"mensagem": "Agendamento cancelado com sucesso!"})
 
 
 
